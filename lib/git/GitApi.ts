@@ -1,33 +1,39 @@
-import { noteIndex } from '../../types'
-import { gitRepoDetails } from '../../types/git'
-import { getOctokit } from './getOctoKit'
+export type gitRepoDetails = {
+	owner: string;
+	repo: string;
+};
+
+import { getOctokit } from "./getOctoKit";
 import {
 	createBlobForFile,
 	createNewCommit,
 	createNewTree,
 	getCurrentCommit,
 	setBranchToCommit,
-} from './gitUtil'
+} from "./gitUtil";
 
 export const getRepos = async () => {
-	return await getOctokit().repos.listForAuthenticatedUser()
-}
+	return await getOctokit().repos.listForAuthenticatedUser();
+};
 
 export interface IGitApi {
 	saveFile: (
 		content: string,
 		fullFilePath: string,
 		commitMessage: string
-	) => Promise<{ commitSha: string }>
-	getFile: (filePath: string) => Promise<{ content }>
-	getFiles: (path: string | undefined, extension: 'md') => Promise<noteIndex>
+	) => Promise<{ commitSha: string }>;
+	getFile: (filePath: string) => Promise<{ content }>;
+	getFiles: (
+		path: string | undefined,
+		extension: "md" | "json"
+	) => Promise<any>;
 }
 function GitApi(
 	gitRepo: gitRepoDetails,
 	branch: string,
 	authToken?: string
 ): IGitApi {
-	let octo = getOctokit(authToken)
+	let octo = getOctokit(authToken);
 	const saveFile = async (
 		content: string,
 		fullFilePath: string,
@@ -37,13 +43,13 @@ function GitApi(
 			octo,
 			...gitRepo,
 			branch,
-		})
+		});
 
 		let blob = await createBlobForFile({
 			octo,
 			...gitRepo,
 			content,
-		})
+		});
 
 		let newTree = await createNewTree({
 			octo,
@@ -51,22 +57,22 @@ function GitApi(
 			blobs: [blob],
 			paths: [fullFilePath],
 			parentTreeSha: currentCommit.treeSha,
-		})
+		});
 		const newCommit = await createNewCommit({
 			octo,
 			...gitRepo,
 			commitMessage,
 			currentTreeSha: newTree.sha,
 			currentCommitSha: currentCommit.commitSha,
-		})
+		});
 		let commit = await setBranchToCommit({
 			octo,
 			...gitRepo,
 			branch,
 			commitSha: newCommit.sha,
-		})
-		return { commitSha: newCommit.sha }
-	}
+		});
+		return { commitSha: newCommit.sha };
+	};
 
 	const getFile = async (filePath: string): Promise<{ content }> => {
 		return await octo.repos
@@ -75,50 +81,47 @@ function GitApi(
 				path: filePath,
 			})
 			.catch((e) => {
-				return e
+				return e;
 			})
 			.then((result) => {
 				if (!result) {
-					return
+					return;
 				}
 				// content will be base64 encoded
-				const content = Buffer.from(
-					result.data.content,
-					'base64'
-				).toString()
+				const content = Buffer.from(result.data.content, "base64").toString();
 				if (!content) {
-					return null
+					return null;
 				}
-				return { content }
-			})
-	}
+				return { content };
+			});
+	};
 
-	const getFiles = async (path: string | undefined, extension: 'md') => {
+	const getFiles = async (path: string | undefined, extension: "md") => {
 		let r = await octo.repos
 			.getContent({
 				...gitRepo,
 				path,
 			})
 			.catch((e) => {
-				console.log(e)
-				throw e
+				console.log(e);
+				throw e;
 			})
 			.then(({ data }) => {
-				return data
-			})
+				return data;
+			});
 
 		//@ts-ignore
 		return r.filter(
 			(f: { name: string; type: string }) =>
-				'file' === f.type && f.name.endsWith(`.${extension}`)
-		)
-	}
+				"file" === f.type && f.name.endsWith(`.${extension}`)
+		);
+	};
 
 	return {
 		saveFile,
 		getFile,
 		getFiles,
-	}
+	};
 }
 
-export default GitApi
+export default GitApi;

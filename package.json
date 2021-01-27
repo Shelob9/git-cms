@@ -9,6 +9,7 @@
 		"test": "jest"
 	},
 	"dependencies": {
+		"@octokit/rest": "^18.0.15",
 		"@tailwindcss/forms": "^0.2.1",
 		"@tailwindcss/typography": "^0.4.0",
 		"@testing-library/react": "^11.2.3",
