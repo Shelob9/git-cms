@@ -8,12 +8,20 @@ import * as crypto from "crypto";
 const algorithm = "aes-256-ctr";
 const secretKey = process.env.ENCRYPT_KEY || "secretmustbe33longJestNeedEnvVar";
 const iv = crypto.randomBytes(16);
-export type hash = {
+
+/**
+ * An encrypted message
+ */
+export type encryptedMessage = {
 	iv: string;
 	content: string;
 };
 
-export const encrypt = (text: string): hash => {
+/**
+ *
+ * @param text
+ */
+export const encrypt = (text: string): encryptedMessage => {
 	const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
 	const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
 	return {
@@ -22,7 +30,7 @@ export const encrypt = (text: string): hash => {
 	};
 };
 
-export const decrypt = (hash: hash): string | false => {
+export const decrypt = (hash: encryptedMessage): string | false => {
 	try {
 		const decipher = crypto.createDecipheriv(
 			algorithm,
