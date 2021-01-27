@@ -14,11 +14,14 @@
 		"@testing-library/react": "^11.2.3",
 		"add": "^2.0.6",
 		"autoprefixer": "^10.0.4",
+		"jsonwebtoken": "^8.5.1",
 		"next": "latest",
 		"postcss": "^8.1.10",
 		"react": "17",
+		"react-cookie": "^4.0.3",
 		"react-dom": "17",
 		"tailwindcss": "^2.0.2",
+		"universal-cookie": "^4.0.4",
 		"yarn": "^1.22.10"
 	},
 	"devDependencies": {
@@ -37,7 +40,8 @@
 		},
 		"testMatch": [
 			"**/__tests__/*.(ts|tsx)",
-			"**/components/*.test.(ts|tsx)"
+			"**/components/*.test.(ts|tsx)",
+			"**/lib/*.test.(ts|tsx)"
 		],
 		"setupFilesAfterEnv": [
 			"<rootDir>/jest.setup.ts"
