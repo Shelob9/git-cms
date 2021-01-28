@@ -1,5 +1,5 @@
 import { AbstractFileService, fileIndex } from "./types";
-
+import fs from "fs";
 import glob from "glob";
 export default async function localFileService(
 	directory: string,
@@ -33,9 +33,15 @@ export default async function localFileService(
 			await _fetchIndex();
 			return index;
 		},
-		fetchFile: async (name: string, extension: "md" | "json") => {
+		fetchFile: async (name: string) => {
+			let filePath = `${process.cwd()}/${directory}/${name}.${extension}`;
 			return new Promise(async (resolve, reject) => {
-				resolve({ content: "" });
+				const content = fs.readFileSync(filePath, {
+					encoding: "utf8",
+					flag: "r",
+				});
+
+				resolve({ content });
 			});
 		},
 	};

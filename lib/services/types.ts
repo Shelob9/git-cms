@@ -25,8 +25,5 @@ export interface AbstractFileService {
 	/**
 	 * Fetch one file
 	 */
-	fetchFile: (
-		name: string,
-		extension: "md" | "json"
-	) => Promise<{ content: string }>;
+	fetchFile: (name: string) => Promise<{ content: string }>;
 }

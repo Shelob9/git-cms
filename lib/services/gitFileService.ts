@@ -23,7 +23,7 @@ export default async function gitFileService(
 				return index;
 			});
 		},
-		fetchFile: async (name: string, extension: "md" | "json") => {
+		fetchFile: async (name: string) => {
 			return this.client
 				.getFile(`${directory}/${name}.${extension}`)
 				.then(({ content }) => {
