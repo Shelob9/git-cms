@@ -22,8 +22,9 @@ describe("userSeuserServicervice", () => {
 		expect(Object.keys(users).length).toEqual(1);
 		let user = await service.createUser("two@email.com", "whatever");
 		expect(user.hashedPassword !== "whatever").toBeTruthy();
+		expect(user.data.encryptionKey.length).toEqual(42);
+
 		users = await service.fetchUsers();
 		expect(Object.keys(users).length).toEqual(2);
-		await service.updateUser({ email: "two@" });
 	});
 });

@@ -1,9 +1,14 @@
 import { hashPassword } from "./../password";
 import { AbstractFileService } from "./types";
 import { encryptedMessage } from "./../encryptDecrypt";
-export interface User {
+import cryptoRandomString from "crypto-random-string";
+export interface UserData {
+	encryptionKey: string;
 	email: string;
+}
+export interface User {
 	hashedPassword: string;
+	data: UserData;
 }
 
 export type UserMap = {
@@ -23,8 +28,11 @@ export default async function userService(fileService: AbstractFileService) {
 		let _users = JSON.parse(jsonString);
 		Object.keys(_users).forEach((k) => {
 			users[k] = {
-				email: _users[k].email ?? k,
 				hashedPassword: _users[k].hashedPassword,
+				data: {
+					email: _users[k].data.email ?? k,
+					encryptionKey: _users[k].data.encryptionKey,
+				},
 			};
 		});
 	}
@@ -52,6 +60,9 @@ export default async function userService(fileService: AbstractFileService) {
 			users[data.email] = {
 				...data,
 				hashedPassword: users[data.email].hashedPassword,
+				data: {
+					...users[data.email].data,
+				},
 			};
 			return await saveUsers();
 		},
@@ -64,9 +75,14 @@ export default async function userService(fileService: AbstractFileService) {
 				await fetchUsers();
 			}
 			let hashedPassword = await hashPassword(plainTextPassword);
+			let encryptionKey = cryptoRandomString({
+				length: 42,
+				type: "alphanumeric",
+			});
+
 			let user = {
-				email,
 				hashedPassword,
+				data: { encryptionKey, email },
 			};
 			users[email] = user;
 			return new Promise(async (resolve) => {

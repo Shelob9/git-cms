@@ -16,6 +16,7 @@
 		"add": "^2.0.6",
 		"autoprefixer": "^10.0.4",
 		"bcrypt": "^5.0.0",
+		"crypto-random-string": "^3.3.0",
 		"glob": "^7.1.6",
 		"jsonwebtoken": "^8.5.1",
 		"next": "latest",
