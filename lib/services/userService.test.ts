@@ -26,5 +26,14 @@ describe("userSeuserServicervice", () => {
 
 		users = await service.fetchUsers();
 		expect(Object.keys(users).length).toEqual(2);
+		expect(Object.values(users)[0].data.hasOwnProperty("email")).toBeTruthy();
+		expect(Object.values(users)[0].data.hasOwnProperty("iv")).toBeFalsy();
+		let _users = fs.readFileSync(`${process.cwd()}/test-files/app/users.json`);
+		_users = JSON.parse(_users.toString());
+		expect(Object.keys(_users).length).toBe(2);
+		//@ts-ignore
+		expect(Object.values(_users)[0].data.hasOwnProperty("iv")).toBeTruthy();
+		//@ts-ignore
+		expect(Object.values(_users)[0].data.hasOwnProperty("email")).toBeFalsy();
 	});
 });
