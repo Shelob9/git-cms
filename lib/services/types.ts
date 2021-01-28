@@ -26,4 +26,9 @@ export interface AbstractFileService {
 	 * Fetch one file
 	 */
 	fetchFile: (name: string) => Promise<{ content: string }>;
+
+	/**
+	 * Save one file
+	 */
+	saveFile: (name: string, contents: string) => Promise<{ content: string }>;
 }

@@ -1,3 +1,4 @@
+import { AbstractFileService } from "./types";
 import { encryptedMessage } from "./../encryptDecrypt";
 export interface User {
 	email: string;
@@ -9,7 +10,7 @@ export type UserMap = {
 export type UserMapEncrypted = {
 	[key: string]: encryptedMessage;
 };
-export default async function userSerivce() {
+export default async function userService(fileService: AbstractFileService) {
 	let users: UserMap = {
 		"one@one.com": {
 			email: "one@one.com",
@@ -21,6 +22,8 @@ export default async function userSerivce() {
 
 	return {
 		fetchUsers: async () => {
+			let users = await fileService.fetchFile("users");
+			return users;
 			return new Promise(async (resolve, reject) => {
 				resolve(users);
 			});

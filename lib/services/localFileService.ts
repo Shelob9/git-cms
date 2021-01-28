@@ -1,6 +1,7 @@
 import { AbstractFileService, fileIndex } from "./types";
 import fs from "fs";
 import glob from "glob";
+
 export default async function localFileService(
 	directory: string,
 	extension: "md" | "json"
@@ -40,6 +41,17 @@ export default async function localFileService(
 					encoding: "utf8",
 					flag: "r",
 				});
+
+				resolve({ content });
+			});
+		},
+		saveFile: async (name: string, content: string) => {
+			let filePath = `${process.cwd()}/${directory}/${name}.${extension}`;
+			return new Promise(async (resolve, reject) => {
+				const data = fs.writeFileSync(filePath, content, {
+					encoding: "utf8",
+				});
+				console.log(data);
 
 				resolve({ content });
 			});

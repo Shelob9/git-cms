@@ -1,6 +1,6 @@
 import { fileIndex } from "./types";
 import localFileService from "./localFileService";
-
+import fs from "fs";
 describe("localfielService", () => {
 	it("finds json files", async () => {
 		let service = await localFileService("test-files", "json");
@@ -28,5 +28,15 @@ describe("localfielService", () => {
 		let service = await localFileService("test-files", "md");
 		let { content } = await service.fetchFile("one");
 		expect(content).toBe("# One");
+	});
+
+	it("Saves files", async () => {
+		fs.copyFileSync(
+			`${process.cwd()}/test-files/write/_write-test.md`,
+			`${process.cwd()}/test-files/write/write-test.md`
+		);
+		let service = await localFileService("test-files/write", "md");
+		let { content } = await service.saveFile("write-test", "Spatula");
+		expect(content).toBe("Spatula");
 	});
 });
