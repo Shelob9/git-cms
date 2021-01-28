@@ -14,14 +14,16 @@ describe("userSeuserServicervice", () => {
 		let users = await service.fetchUsers();
 		expect(Object.keys(users).length).toEqual(1);
 	});
-	it("updates users", async () => {
+	it("Creates  users", async () => {
 		let fileService = await localFileService("test-files/app", "json");
 		let service = await userService(fileService);
-		await service.fetchUsers();
-
-		let users = await service.updateUser({
-			email: "two@email.com",
-		});
+		//let users = await service.updateUser({ email: "two@email.com" });
+		let users = await service.fetchUsers();
+		expect(Object.keys(users).length).toEqual(1);
+		let user = await service.createUser("two@email.com", "whatever");
+		expect(user.hashedPassword !== "whatever").toBeTruthy();
+		users = await service.fetchUsers();
 		expect(Object.keys(users).length).toEqual(2);
+		await service.updateUser({ email: "two@" });
 	});
 });

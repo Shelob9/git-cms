@@ -1,5 +1,6 @@
 {
 	"one@email.com": {
-		"email": "one@email.com"
+		"email": "one@email.com",
+		"hashedPassword": "hashedPassword"
 	}
 }

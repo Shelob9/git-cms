@@ -48,10 +48,9 @@ export default async function localFileService(
 		saveFile: async (name: string, content: string) => {
 			let filePath = `${process.cwd()}/${directory}/${name}.${extension}`;
 			return new Promise(async (resolve, reject) => {
-				const data = fs.writeFileSync(filePath, content, {
+				fs.writeFileSync(filePath, content, {
 					encoding: "utf8",
 				});
-				console.log(data);
 
 				resolve({ content });
 			});
