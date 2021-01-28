@@ -11,10 +11,10 @@ export type UserMapEncrypted = {
 };
 export default async function userSerivce() {
 	let users: UserMap = {
-		one: {
+		"one@one.com": {
 			email: "one@one.com",
 		},
-		two: {
+		"two@two.com": {
 			email: "two@two.com",
 		},
 	};

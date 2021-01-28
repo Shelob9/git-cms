@@ -1,26 +1,26 @@
+import { AbstractFileService, fileIndex } from "./types";
 import { IGitApi } from "./../git/GitApi";
+
 export default async function gitFileService(
 	client: IGitApi,
 	directory: string,
 	extension: "md" | "json"
-) {
-	this.index = [];
+): Promise<AbstractFileService> {
+	let index: fileIndex = [];
 	return {
 		getIndex: () => {
-			return this.index;
+			return index;
 		},
-		fetchNoteIndex: async () => {
+		fetchIndex: async () => {
 			return client.getFiles(directory, extension).then((r) => {
-				this.index = r.map((file) => {
+				index = r.map((file) => {
 					let { path, name } = file;
-					let slug = path.replace(".md", "").replace("notes/", "");
 					return {
-						slug,
 						path,
 						name,
 					};
 				});
-				return this.index;
+				return index;
 			});
 		},
 		fetchFile: async (name: string, extension: "md" | "json") => {
