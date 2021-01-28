@@ -1,3 +1,5 @@
 {
-	"one@email.com": {}
+	"one@email.com": {
+		"email": "one@email.com"
+	}
 }

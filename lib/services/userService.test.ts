@@ -14,4 +14,14 @@ describe("userSeuserServicervice", () => {
 		let users = await service.fetchUsers();
 		expect(Object.keys(users).length).toEqual(1);
 	});
+	it("updates users", async () => {
+		let fileService = await localFileService("test-files/app", "json");
+		let service = await userService(fileService);
+		await service.fetchUsers();
+
+		let users = await service.updateUser({
+			email: "two@email.com",
+		});
+		expect(Object.keys(users).length).toEqual(2);
+	});
 });

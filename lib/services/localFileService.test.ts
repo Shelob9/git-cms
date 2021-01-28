@@ -1,4 +1,3 @@
-import { fileIndex } from "./types";
 import localFileService from "./localFileService";
 import fs from "fs";
 describe("localfielService", () => {
