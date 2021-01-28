@@ -69,6 +69,9 @@ export default async function userService(fileService: AbstractFileService) {
 		getUsers() {
 			return users;
 		},
+		getUser(email: string) {
+			return users[email];
+		},
 		fetchUsers,
 		updateUser: async (data: UserUpdateInput): Promise<UserMap> => {
 			users[data.email] = {
@@ -80,7 +83,6 @@ export default async function userService(fileService: AbstractFileService) {
 			};
 			return await saveUsers();
 		},
-
 		createUser: async (
 			email: string,
 			plainTextPassword: string
