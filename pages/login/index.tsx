@@ -27,7 +27,7 @@ export default function Login() {
 
 
     return (
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} action="/api/login" method="POST">
             <div>
                 <label htmlFor={"email"}>Email</label>
                 <input name={"email"} type={"email"} ref={emailRef}

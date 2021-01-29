@@ -6,8 +6,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let { email, password } = req.body;
 	try {
 		let user = await app.loginUser(email, password);
-		console.log(user);
-		res.status(200).json({ hi: "Roy", user });
+		if (user) {
+			let session = await app.authService.startUserSession(user);
+			res.status(200).json({ session });
+		} else {
+			res.status(403).json({ error: "User not found" });
+		}
 	} catch (error) {
 		res.status(403).json({ error });
 	}
