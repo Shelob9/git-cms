@@ -1,3 +1,4 @@
+import { createJwtToken } from "./../jwt";
 import { hashPassword } from "./../password";
 import { AbstractFileService } from "./types";
 import { encrypt, decrypt, encryptedMessage } from "./../encryptDecrypt";
@@ -26,9 +27,21 @@ export type UserUpdateInput = {
 export type UserMapEncrypted = {
 	[key: string]: encryptedMessage;
 };
-export default async function userService(fileService: AbstractFileService) {
+
+export interface IUserService {
+	getUser(email: string): User;
+	fetchUsers(): Promise<UserMap>;
+	updateUser(data: UserUpdateInput): Promise<UserMap>;
+	createUser(email: string, plainTextPassword: string): Promise<User>;
+}
+export default async function userService(
+	fileService: AbstractFileService
+): Promise<IUserService> {
 	let users: UserMap = {};
 
+	/**
+	 * Sets the user map (users variable) from encrypted JSON.
+	 */
 	async function setMap(jsonString: string) {
 		let _users = JSON.parse(jsonString);
 		Object.keys(_users).forEach(async (k) => {
@@ -42,12 +55,16 @@ export default async function userService(fileService: AbstractFileService) {
 		});
 	}
 
+	/**
+	 * Save all users
+	 *
+	 * Returns unencrypted user map
+	 */
 	async function saveUsers(): Promise<UserMap> {
 		return new Promise(async (resolve) => {
 			let _users = {};
 			Object.keys(users).forEach((email) => {
 				let data = encrypt(JSON.stringify(users[email].data));
-
 				_users[email] = {
 					hashedPassword: users[email].hashedPassword,
 					data,
@@ -58,20 +75,28 @@ export default async function userService(fileService: AbstractFileService) {
 		});
 	}
 
-	async function fetchUsers() {
+	/**
+	 * Load all users
+	 */
+	async function fetchUsers(): Promise<UserMap> {
 		return new Promise(async (resolve, reject) => {
 			let { content } = await fileService.fetchFile("users");
 			setMap(content);
 			resolve(users);
 		});
 	}
+
+	/**
+	 * Get a user by email
+	 *
+	 * Must call fetchUsers() first
+	 * @param email
+	 */
+	function getUser(email: string) {
+		return users[email];
+	}
 	return {
-		getUsers() {
-			return users;
-		},
-		getUser(email: string) {
-			return users[email];
-		},
+		getUser,
 		fetchUsers,
 		updateUser: async (data: UserUpdateInput): Promise<UserMap> => {
 			users[data.email] = {

@@ -26,6 +26,7 @@
 		"react-dom": "17",
 		"tailwindcss": "^2.0.2",
 		"universal-cookie": "^4.0.4",
+		"uuid": "^8.3.2",
 		"yarn": "^1.22.10"
 	},
 	"devDependencies": {

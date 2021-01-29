@@ -9,13 +9,13 @@ describe("userSeuserServicervice", () => {
 			`${process.cwd()}/test-files/app/users.json`
 		);
 	});
-	it.skip("gets users", async () => {
+	it("gets users", async () => {
 		let fileService = await localFileService("test-files/app", "json");
 		let service = await userService(fileService);
 		let users = await service.fetchUsers();
 		expect(Object.keys(users).length).toEqual(1);
 	});
-	it.skip("Creates users", async () => {
+	it("Creates users", async () => {
 		let fileService = await localFileService("test-files/app", "json");
 		let service = await userService(fileService);
 		let users = await service.fetchUsers();
@@ -26,7 +26,7 @@ describe("userSeuserServicervice", () => {
 
 		users = await service.fetchUsers();
 		expect(Object.keys(users).length).toEqual(2);
-		expect(Object.values(users)[0].data.hasOwnProperty("email")).toBeTruthy();
+
 		expect(Object.values(users)[0].data.hasOwnProperty("iv")).toBeFalsy();
 		let _users = fs.readFileSync(`${process.cwd()}/test-files/app/users.json`);
 		_users = JSON.parse(_users.toString());
@@ -37,7 +37,7 @@ describe("userSeuserServicervice", () => {
 		expect(Object.values(_users)[0].data.hasOwnProperty("email")).toBeFalsy();
 	});
 
-	it.only("Decrypts created user", async () => {
+	it("Decrypts created user", async () => {
 		let fileService = await localFileService("test-files/app", "json");
 		let service = await userService(fileService);
 		await service.fetchUsers();
