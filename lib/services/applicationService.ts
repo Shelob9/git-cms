@@ -1,4 +1,4 @@
-import { hashPassword } from "./../password";
+import { checkPassword } from "./../password";
 import localFileService from "./localFileService";
 import userService, { User } from "./userService";
 
@@ -8,14 +8,19 @@ export default async function applicationService(appDirectory: string) {
 	let currentUser: User | undefined = undefined;
 
 	async function loginUser(email: string, plainTextPassword: string) {
-		let hashedPassword = await hashPassword(plainTextPassword);
 		try {
 			let user = _userService.getUser(email);
-			if (user.hashedPassword === hashedPassword) {
+			console.log(user);
+			let valid = await checkPassword(plainTextPassword, user.hashedPassword);
+			if (valid) {
 				currentUser = user;
 				return user;
 			}
-		} catch (error) {}
+			console.log(valid, user);
+		} catch (error) {
+			console.log(error);
+			throw error;
+		}
 	}
 
 	return {

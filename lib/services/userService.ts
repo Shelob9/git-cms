@@ -1,8 +1,7 @@
 import { hashPassword } from "./../password";
 import { AbstractFileService } from "./types";
-import { encrypt, encryptedMessage } from "./../encryptDecrypt";
+import { encrypt, decrypt, encryptedMessage } from "./../encryptDecrypt";
 import cryptoRandomString from "crypto-random-string";
-import { resolve } from "path";
 export interface UserData {
 	encryptionKey: string;
 	email: string;
@@ -30,15 +29,15 @@ export type UserMapEncrypted = {
 export default async function userService(fileService: AbstractFileService) {
 	let users: UserMap = {};
 
-	function setMap(jsonString: string) {
+	async function setMap(jsonString: string) {
 		let _users = JSON.parse(jsonString);
-		Object.keys(_users).forEach((k) => {
+		Object.keys(_users).forEach(async (k) => {
+			let data = await decrypt(_users[k].data);
+
 			users[k] = {
 				hashedPassword: _users[k].hashedPassword,
-				data: {
-					email: _users[k].data.email ?? k,
-					encryptionKey: _users[k].data.encryptionKey,
-				},
+				//@ts-ignore
+				data: JSON.parse(data),
 			};
 		});
 	}
@@ -48,8 +47,9 @@ export default async function userService(fileService: AbstractFileService) {
 			let _users = {};
 			Object.keys(users).forEach((email) => {
 				let data = encrypt(JSON.stringify(users[email].data));
+
 				_users[email] = {
-					hashPassword: users[email].hashedPassword,
+					hashedPassword: users[email].hashedPassword,
 					data,
 				};
 			});
@@ -96,11 +96,12 @@ export default async function userService(fileService: AbstractFileService) {
 				type: "alphanumeric",
 			});
 
-			let user = {
+			let user: User = {
 				hashedPassword,
 				data: { encryptionKey, email },
 			};
 			users[email] = user;
+
 			await saveUsers();
 			return user;
 		},

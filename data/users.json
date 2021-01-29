@@ -1,0 +1,9 @@
+{
+	"test@email.com": {
+		"hashedPassword": "$2b$10$IU0a2J.H0XmVBYCRHfi4NOZXo/YOoM0rn/38oEIsFUL/mkDEG6.YK",
+		"data": {
+			"iv": "b0d02f84f46c412c89e45b64c5d6968d",
+			"content": "13cf288720832043d5bfa9ee5e9798c6518f6a597dd6904341132ef48afcb3e3197a7b8bc54311f76dde9fbc890d490c64d27acb1131061a42fe769ceee4976ab5628b986c0285bb95058eaef14ca957329a755b7c8111"
+		}
+	}
+}

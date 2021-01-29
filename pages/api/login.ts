@@ -1,10 +1,14 @@
 import { NextApiResponse } from "next";
 import { NextApiRequest } from "next";
-import getSession from "../../lib/getSession";
-
+import factory from "../../lib/factory";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	const session = getSession(req, "space-macroons");
-	res.setHeader("Content-Type", "application/json");
-	res.setHeader("Cache-Control", "s-maxage=360");
-	res.status(200).json({ hi: "Roy", session });
+	let app = await factory(undefined);
+	let { email, password } = req.body;
+	try {
+		let user = await app.loginUser(email, password);
+		console.log(user);
+		res.status(200).json({ hi: "Roy", user });
+	} catch (error) {
+		res.status(403).json({ error });
+	}
 };
