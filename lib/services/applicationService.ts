@@ -1,12 +1,18 @@
 import { async } from "crypto-random-string";
 import { checkPassword } from "./../password";
 import localFileService from "./localFileService";
-import userService, { User, IUserService } from "./userService";
+import userService, {
+	User,
+	IUserService,
+	IUserMeta,
+	userMetaService,
+} from "./userService";
 import authService, { IAuthService } from "./authService";
 
 export interface IApplicationService {
 	loginUser: (email: string, plainTextPassword: string) => Promise<User>;
 	currentUser: User | undefined;
+	currentUserMeta: IUserMeta | undefined;
 	userService: IUserService;
 	authService: IAuthService;
 	logoutCurrentUser: () => Promise<undefined>;
@@ -22,7 +28,15 @@ export default async function applicationService(appDirectory: string) {
 	let _userService = await userService(userFileService);
 	let _authService = await authService(_userService, inviteCodes);
 	let currentUser: User | undefined = undefined;
-
+	let _userMetaService: IUserMeta | undefined = undefined;
+	async function _setCurrentUser(user: User | undefined) {
+		currentUser = user;
+		if (currentUser) {
+			_userMetaService = await userMetaService(currentUser, _userService);
+		} else {
+			_userMetaService = undefined;
+		}
+	}
 	function logError(error: Error | any) {
 		console.log(error);
 	}
@@ -47,12 +61,10 @@ export default async function applicationService(appDirectory: string) {
 		inviteCode: string
 	): Promise<User | false> {
 		let inviteCodeValid = await _authService.validateInviteCode(inviteCode);
-		console.log(inviteCodeValid, inviteCode);
 		if (inviteCodeValid) {
 			try {
 				let user = await _userService.createUser(email, plainTextPassword);
-				console.log(user);
-				currentUser = user;
+				_setCurrentUser(user);
 				return user;
 			} catch (error) {
 				logError(error);
@@ -65,10 +77,11 @@ export default async function applicationService(appDirectory: string) {
 	return {
 		loginUser,
 		currentUser,
+		currentUserMeta: _userMetaService,
 		userService: _userService,
 		authService: _authService,
 		logoutCurrentUser: async () => {
-			currentUser = undefined;
+			_setCurrentUser(undefined);
 			return undefined;
 		},
 		registerUser,

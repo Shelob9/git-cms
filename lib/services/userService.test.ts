@@ -1,7 +1,6 @@
-import { decrypt } from "./../encryptDecrypt";
 import fs from "fs";
 import localFileService from "./localFileService";
-import userService from "./userService";
+import userService, { userMetaService } from "./userService";
 describe("userSeuserServicervice", () => {
 	beforeEach(() => {
 		fs.copyFileSync(
@@ -52,5 +51,18 @@ describe("userSeuserServicervice", () => {
 		//Should be same user, with same key
 		expect(user1.data.encryptionKey).toEqual(user2.data.encryptionKey);
 		expect(user1.data.meta).toEqual(user2.data.meta);
+	});
+
+	it("works with user meta util", async () => {
+		let fileService = await localFileService("test-files/app", "json");
+		let _userService = await userService(fileService);
+		await _userService.fetchUsers();
+		let user1 = await _userService.createUser("22@one.com", "password");
+		await _userService.fetchUsers();
+
+		let metaService = await userMetaService(user1, _userService);
+		await metaService.saveMeta("roy", "hello");
+		let value = await metaService.getMeta("roy");
+		expect(value).toEqual("hello");
 	});
 });

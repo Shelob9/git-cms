@@ -1,12 +1,12 @@
-import { createJwtToken } from "./../jwt";
 import { hashPassword } from "./../password";
 import { AbstractFileService } from "./types";
 import { encrypt, decrypt, encryptedMessage } from "./../encryptDecrypt";
 import cryptoRandomString from "crypto-random-string";
+export type userMetas = { [key: string]: string | number };
 export interface UserData {
 	encryptionKey: string;
 	email: string;
-	meta: { [key: string]: string | number };
+	meta: userMetas;
 }
 export interface User {
 	hashedPassword: string;
@@ -24,17 +24,78 @@ export type UserMap = {
 
 export type UserUpdateInput = {
 	email: string;
+	meta?: userMetas;
 };
 export type UserMapEncrypted = {
 	[key: string]: encryptedMessage;
 };
 
+export interface IUserMeta {
+	saveMeta(
+		key: string,
+		value: string | number
+	): Promise<string | number | false>;
+	getMeta(key: string): Promise<string | number | false>;
+}
+
+/**
+ * Service for managing meta fields of one user.
+ *
+ * @param user
+ * @param userService
+ */
+export const userMetaService = async (
+	user: User,
+	userService: IUserService
+): Promise<IUserMeta> => {
+	async function saveMeta(
+		key: string,
+		value: string | number
+	): Promise<string | number | false> {
+		return new Promise(async (resolve, reject) => {
+			try {
+				await userService.updateUser({
+					email: user.data.email,
+					meta: {
+						...user.data.meta,
+						[key]: value,
+					},
+				});
+				user = userService.getUser(user.data.email);
+				resolve(value);
+			} catch (error) {
+				reject(error);
+			}
+		});
+	}
+
+	async function getMeta(key: string): Promise<string | number | false> {
+		return new Promise(async (resolve, reject) => {
+			let value = user.data.meta.hasOwnProperty(key)
+				? user.data.meta[key]
+				: false;
+
+			resolve(value);
+		});
+	}
+
+	return {
+		saveMeta,
+		getMeta,
+	};
+};
 export interface IUserService {
 	getUser(email: string): User;
 	fetchUsers(): Promise<UserMap>;
 	updateUser(data: UserUpdateInput): Promise<UserMap>;
 	createUser(email: string, plainTextPassword: string): Promise<User>;
 }
+
+/**
+ * Service for managing users
+ *
+ * @param fileService
+ */
 export default async function userService(
 	fileService: AbstractFileService
 ): Promise<IUserService> {
@@ -100,13 +161,15 @@ export default async function userService(
 	return {
 		getUser,
 		fetchUsers,
-		updateUser: async (data: UserUpdateInput): Promise<UserMap> => {
-			users[data.email] = {
-				...data,
-				hashedPassword: users[data.email].hashedPassword,
-				data: {
-					...users[data.email].data,
-				},
+		updateUser: async (input: UserUpdateInput): Promise<UserMap> => {
+			let data: UserData = {
+				...users[input.email].data,
+				meta: input.meta ? input.meta : users[input.email].data.meta,
+			};
+			users[input.email] = {
+				...input,
+				hashedPassword: users[input.email].hashedPassword,
+				data,
 			};
 			return await saveUsers();
 		},
