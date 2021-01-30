@@ -1,9 +1,9 @@
-import { useMemo, useRef } from "react"
+import { useRef } from "react"
 import useSession from '../../hooks/useSession';
 export default function Login() {
     let emailRef = useRef<HTMLInputElement>();
     let passwordRef = useRef<HTMLInputElement>();
-    let { startSession,isLoggedIn } = useSession({ cookieName: 'sunshine' });
+    let { startSession,isLoggedIn } = useSession();
     const onSubmit = (e) => {
         e.preventDefault();
         fetch(`/api/login`, {

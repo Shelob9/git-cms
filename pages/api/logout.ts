@@ -4,14 +4,9 @@ import factory from "../../lib/factory";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let app = await factory(undefined);
 	switch (req.method) {
-		case "GET": {
-			res.setHeader("Content-Type", "application/json");
-			res.setHeader("Cache-Control", "s-maxage=360");
-			res.status(200).json({ hi: "Roy" });
-			break;
-		}
 		default:
-			res.status(405).json({ error: "Not implimented" });
+			await app.logoutCurrentUser();
+			res.status(200).json({ message: "Logged out" });
 			break;
 	}
 };

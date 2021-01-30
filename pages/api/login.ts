@@ -1,5 +1,4 @@
-import { NextApiResponse } from "next";
-import { NextApiRequest } from "next";
+import { NextApiResponse, NextApiRequest } from "next";
 import factory from "../../lib/factory";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let app = await factory(undefined);

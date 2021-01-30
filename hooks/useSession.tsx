@@ -1,8 +1,8 @@
 
 import { useCookies } from 'react-cookie'
 import { useMemo, useEffect, useState } from 'react'
-const useSession = (props: { cookieName: string }) => {
-    const { cookieName } = props;
+const useSession = () => {
+	let cookieName = process.env.NEXT_PUBLIC_GIT_CMS_COOKIE_NAME;
 	const [cookies, setCookie] = useCookies([cookieName])
     const [session, setSession] = useState<{ jwt: string; uuid: string }|undefined>();
 
@@ -31,9 +31,9 @@ const useSession = (props: { cookieName: string }) => {
 		})
 	}
 	
-	const isLoggedIn = useMemo(() => {
+	const isLoggedIn = useMemo<boolean>(() => {
 		return undefined != session;
-	}, [session]);
+	}, [session,cookies]);
     
 	return { session,endSession, removeCookie,startSession,isLoggedIn }
 }
