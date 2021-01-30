@@ -11,10 +11,18 @@ export const hashString = (str: string) =>
 export interface IAuthService {
 	validateSessionToken: (sessionId: string, jwt: string) => Promise<boolean>;
 	startUserSession: (user: User) => Promise<{ sessionId: string; jwt: string }>;
+	validateInviteCode: (code: string) => Promise<boolean>;
 }
 export default async function authService(
-	userService: IUserService
+	userService: IUserService,
+	inviteCodes: string[]
 ): Promise<IAuthService> {
+	async function validateInviteCode(code: string): Promise<boolean> {
+		return new Promise(async (resolve) => {
+			return resolve(inviteCodes.includes(code));
+		});
+	}
+
 	async function startUserSession(
 		user: User
 	): Promise<{ sessionId: string; jwt: string }> {
@@ -46,5 +54,6 @@ export default async function authService(
 	return {
 		validateSessionToken,
 		startUserSession,
+		validateInviteCode,
 	};
 }

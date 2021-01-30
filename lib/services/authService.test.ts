@@ -17,7 +17,7 @@ describe("Auth service", () => {
 		let theUserService = await userService(fileService);
 		theUserService.fetchUsers();
 		let user = await theUserService.createUser("test@email.com", "password");
-		let theAuthService = await authService(theUserService);
+		let theAuthService = await authService(theUserService, []);
 		let session = await theAuthService.startUserSession(user);
 		let valid = await theAuthService.validateSessionToken(
 			session.sessionId,
@@ -27,5 +27,16 @@ describe("Auth service", () => {
 		expect(
 			await theAuthService.validateSessionToken("not correct", session.jwt)
 		).toBeFalsy();
+	});
+
+	it("validates invite codes", async () => {
+		let fileService = await localFileService("test-files/app", "json");
+		let theUserService = await userService(fileService);
+		theUserService.fetchUsers();
+		let theAuthService = await authService(theUserService, ["noms", "salad"]);
+		let valid = await theAuthService.validateInviteCode("noms");
+		expect(valid).toBeTruthy();
+		valid = await theAuthService.validateInviteCode("lulz");
+		expect(valid).toBeFalsy();
 	});
 });

@@ -10,13 +10,22 @@ export interface IApplicationService {
 	userService: IUserService;
 	authService: IAuthService;
 	logoutCurrentUser: () => Promise<undefined>;
+	registerUser: (
+		email: string,
+		plainTextPassword: string,
+		inviteCode: string
+	) => Promise<User | boolean>;
 }
 export default async function applicationService(appDirectory: string) {
+	let inviteCodes = ["roy"];
 	let userFileService = await localFileService(appDirectory, "json");
 	let _userService = await userService(userFileService);
-	let _authService = await authService(_userService);
+	let _authService = await authService(_userService, inviteCodes);
 	let currentUser: User | undefined = undefined;
 
+	function logError(error: Error | any) {
+		console.log(error);
+	}
 	async function loginUser(email: string, plainTextPassword: string) {
 		try {
 			let user = _userService.getUser(email);
@@ -27,9 +36,30 @@ export default async function applicationService(appDirectory: string) {
 			}
 			return false;
 		} catch (error) {
-			console.log(error);
+			logError(error);
 			throw error;
 		}
+	}
+
+	async function registerUser(
+		email: string,
+		plainTextPassword: string,
+		inviteCode: string
+	): Promise<User | false> {
+		let inviteCodeValid = await _authService.validateInviteCode(inviteCode);
+		console.log(inviteCodeValid, inviteCode);
+		if (inviteCodeValid) {
+			try {
+				let user = await _userService.createUser(email, plainTextPassword);
+				console.log(user);
+				currentUser = user;
+				return user;
+			} catch (error) {
+				logError(error);
+				return false;
+			}
+		}
+		return false;
 	}
 
 	return {
@@ -41,5 +71,6 @@ export default async function applicationService(appDirectory: string) {
 			currentUser = undefined;
 			return undefined;
 		},
+		registerUser,
 	};
 }
