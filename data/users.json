@@ -1,1 +1,9 @@
-{"test@email.com":{"hashedPassword":"$2b$10$IxqvqAx0PvR5WQXapOTLPO7UMWZ4wYkVZRfoEDu61ptUMLz3SGH/2","data":{"iv":"cb34303a6a5254b744a00fd63dd919e1","content":"c51dea8285ebb5a24b71440402461600e687800472a7d2ff1b4a5a032fc7b2cc9555302972ffc30a004aedb6e283eeddabf4de4428295e8cae1322c3b69029d6e305b70023f367d22978d1a6fb51c02c17bc945d1a7e43"}},"t@one.com":{"hashedPassword":"$2b$10$UewgfJlewRKYWX3v4LXtCOgRMFstoTbCRTbif7XYo8OTSyYTb/VkG","data":{"iv":"cb34303a6a5254b744a00fd63dd919e1","content":"c51dea8285ebb5a24b71440402461600e687a04b6e93d4c0272903120ce1c695b35c2e2675fcc379071bd7a8edc9eaf7a0e9ac7f7b215196a71309e3b69029d6e305b70023f367d20c64cb83b05fce2859ef"}}}
+{
+	"test@email.com": {
+		"hashedPassword": "$2b$10$IxqvqAx0PvR5WQXapOTLPO7UMWZ4wYkVZRfoEDu61ptUMLz3SGH/2",
+		"data": {
+			"iv": "cb34303a6a5254b744a00fd63dd919e1",
+			"content": "c51dea8285ebb5a24b71440402461600e687800472a7d2ff1b4a5a032fc7b2cc9555302972ffc30a004aedb6e283eeddabf4de4428295e8cae1322c3b69029d6e305b70023f367d22978d1a6fb51c02c17bc945d1a7e43"
+		}
+	}
+}

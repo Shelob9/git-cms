@@ -42,6 +42,8 @@ describe("userSeuserServicervice", () => {
 		let service = await userService(fileService);
 		await service.fetchUsers();
 		let user1 = await service.createUser("22@one.com", "password");
+		expect(user1.data.meta).toEqual({});
+
 		//reload
 		fileService = await localFileService("test-files/app", "json");
 		service = await userService(fileService);
@@ -49,5 +51,6 @@ describe("userSeuserServicervice", () => {
 		let user2 = service.getUser("22@one.com");
 		//Should be same user, with same key
 		expect(user1.data.encryptionKey).toEqual(user2.data.encryptionKey);
+		expect(user1.data.meta).toEqual(user2.data.meta);
 	});
 });

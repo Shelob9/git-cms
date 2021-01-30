@@ -3,7 +3,8 @@
 		"hashedPassword": "hashedPassword",
 		"data": {
 			"encryptionKey": "encryptionKey",
-			"email": "one@email.com"
+			"email": "one@email.com",
+			"meta": {}
 		}
 	}
 }

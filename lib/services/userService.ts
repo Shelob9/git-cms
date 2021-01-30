@@ -6,6 +6,7 @@ import cryptoRandomString from "crypto-random-string";
 export interface UserData {
 	encryptionKey: string;
 	email: string;
+	meta: { [key: string]: string | number };
 }
 export interface User {
 	hashedPassword: string;
@@ -46,11 +47,12 @@ export default async function userService(
 		let _users = JSON.parse(jsonString);
 		Object.keys(_users).forEach(async (k) => {
 			let data = await decrypt(_users[k].data);
-
+			//@ts-ignore
+			data = JSON.parse(data);
 			users[k] = {
 				hashedPassword: _users[k].hashedPassword,
 				//@ts-ignore
-				data: JSON.parse(data),
+				data,
 			};
 		});
 	}
@@ -123,7 +125,7 @@ export default async function userService(
 
 			let user: User = {
 				hashedPassword,
-				data: { encryptionKey, email },
+				data: { encryptionKey, email, meta: {} },
 			};
 			users[email] = user;
 
