@@ -30,5 +30,15 @@ export default async function gitFileService(
 					return { content };
 				});
 		},
+		saveFile: async (
+			name: string,
+			contents: string
+		): Promise<{ content: string }> => {
+			return await this.client.saveFile(
+				contents,
+				`${directory}/${name}.${extension}`,
+				`Update ${name}`
+			);
+		},
 	};
 }

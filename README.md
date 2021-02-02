@@ -16,9 +16,13 @@
   - `yarn test --watch`
   - `yarn test --ci`
 
-## Deploy your own
+### Environment Variables
 
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
+- `GITCMS_USE_GIT`
+  - Use git: `GITCMS_USE_GIT=true`
+  - Use local file system: `GITCMS_USE_GIT=true`
+
+## Deploy your own
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/Shelob9/next-starter&project-name=next-starter&repository-name=next-starter)
 

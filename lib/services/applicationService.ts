@@ -21,9 +21,15 @@ export interface IApplicationService {
 		plainTextPassword: string,
 		inviteCode: string
 	) => Promise<User | boolean>;
+	useGit: boolean;
 }
-export default async function applicationService(appDirectory: string) {
-	let inviteCodes = ["roy"];
+export default async function applicationService(
+	appDirectory: string,
+	inviteCodes?: string[],
+	useGit?: boolean
+) {
+	inviteCodes = inviteCodes ?? ["roy"];
+	useGit = useGit ?? false;
 	let userFileService = await localFileService(appDirectory, "json");
 	let _userService = await userService(userFileService);
 	let _authService = await authService(_userService, inviteCodes);
@@ -85,5 +91,6 @@ export default async function applicationService(appDirectory: string) {
 			return undefined;
 		},
 		registerUser,
+		useGit,
 	};
 }
