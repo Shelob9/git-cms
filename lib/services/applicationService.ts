@@ -1,3 +1,4 @@
+import { gitRepoDetails } from "./../git/GitApi";
 import { async } from "crypto-random-string";
 import { checkPassword } from "./../password";
 import localFileService from "./localFileService";
@@ -8,6 +9,8 @@ import userService, {
 	userMetaService,
 } from "./userService";
 import authService, { IAuthService } from "./authService";
+import gitFileService from "./gitFileService";
+import GitApi from "../git/GitApi";
 
 export interface IApplicationService {
 	loginUser: (email: string, plainTextPassword: string) => Promise<User>;
@@ -26,11 +29,14 @@ export interface IApplicationService {
 export default async function applicationService(
 	appDirectory: string,
 	inviteCodes?: string[],
-	useGit?: boolean
+	useGit?: false | gitRepoDetails
 ) {
 	inviteCodes = inviteCodes ?? ["roy"];
 	useGit = useGit ?? false;
-	let userFileService = await localFileService(appDirectory, "json");
+	let userFileService =
+		false === useGit
+			? await localFileService(appDirectory, "json")
+			: await gitFileService(GitApi(useGit, "main"), appDirectory, "json");
 	let _userService = await userService(userFileService);
 	let _authService = await authService(_userService, inviteCodes);
 	let currentUser: User | undefined = undefined;
