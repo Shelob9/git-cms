@@ -1,9 +1,10 @@
 import { NextApiResponse, NextApiRequest } from "next";
 import factory from "../../lib/factory";
-/**
- * Register user via API
- */
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+
+async function registerationController(
+	req: NextApiRequest,
+	res: NextApiResponse
+) {
 	let app = await factory(undefined);
 	switch (req.method) {
 		case "POST": {
@@ -27,4 +28,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 			res.status(405).json({ error: "Not implimented" });
 			break;
 	}
+}
+/**
+ * Register user via API
+ */
+export default async (req: NextApiRequest, res: NextApiResponse) => {
+	await registerationController(req, res);
 };
