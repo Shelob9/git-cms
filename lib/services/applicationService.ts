@@ -25,6 +25,7 @@ export interface IApplicationService {
 		inviteCode: string
 	) => Promise<User | boolean>;
 	useGit: boolean;
+	setCurrentUser: (user: User | undefined) => Promise<void>;
 }
 export default async function applicationService(
 	appDirectory: string,
@@ -42,11 +43,14 @@ export default async function applicationService(
 	let currentUser: User | undefined = undefined;
 	let _userMetaService: IUserMeta | undefined = undefined;
 	async function _setCurrentUser(user: User | undefined) {
-		currentUser = user;
-		if (currentUser) {
-			_userMetaService = await userMetaService(currentUser, _userService);
+		this.currentUser = user;
+		if (this.currentUser) {
+			this.currentUserMeta = await userMetaService(
+				this.currentUser,
+				this.userService
+			);
 		} else {
-			_userMetaService = undefined;
+			this.currentUserMeta = undefined;
 		}
 	}
 	function logError(error: Error | any) {
@@ -98,5 +102,6 @@ export default async function applicationService(
 		},
 		registerUser,
 		useGit,
+		setCurrentUser: _setCurrentUser,
 	};
 }

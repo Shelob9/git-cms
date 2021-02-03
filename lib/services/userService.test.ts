@@ -61,7 +61,10 @@ describe("userSeuserServicervice", () => {
 		await _userService.fetchUsers();
 
 		let metaService = await userMetaService(user1, _userService);
+
 		await metaService.saveMeta("roy", "hello");
+		await metaService.saveMeta("r2", "t2");
+
 		let value = await metaService.getMeta("roy");
 		expect(value).toEqual("hello");
 	});

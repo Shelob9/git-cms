@@ -54,14 +54,14 @@ export const userMetaService = async (
 	): Promise<string | number | false> {
 		return new Promise(async (resolve, reject) => {
 			try {
-				await userService.updateUser({
+				let users = await userService.updateUser({
 					email: user.data.email,
 					meta: {
 						...user.data.meta,
 						[key]: value,
 					},
 				});
-				user = userService.getUser(user.data.email);
+				user = users[user.data.email];
 				resolve(value);
 			} catch (error) {
 				reject(error);
