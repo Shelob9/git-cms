@@ -1,8 +1,3 @@
-export type gitRepoDetails = {
-	owner: string;
-	repo: string;
-};
-
 import { getOctokit } from "./getOctoKit";
 import {
 	createBlobForFile,
@@ -11,6 +6,11 @@ import {
 	getCurrentCommit,
 	setBranchToCommit
 } from "./gitUtil";
+
+export type gitRepoDetails = {
+	owner: string;
+	repo: string;
+};
 
 export const getRepos = async () => {
 	return await getOctokit().repos.listForAuthenticatedUser();

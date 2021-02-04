@@ -26,7 +26,7 @@ export const encrypt = (text: string): encryptedMessage => {
 	const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
 	return {
 		iv: iv.toString("hex"),
-		content: encrypted.toString("hex"),
+		content: encrypted.toString("hex")
 	};
 };
 
@@ -40,7 +40,7 @@ export const decrypt = (hash: encryptedMessage): string | false => {
 		try {
 			const decrpyted = Buffer.concat([
 				decipher.update(Buffer.from(hash.content, "hex")),
-				decipher.final(),
+				decipher.final()
 			]);
 
 			return decrpyted.toString();
@@ -50,5 +50,4 @@ export const decrypt = (hash: encryptedMessage): string | false => {
 	} catch (error) {
 		return false;
 	}
-	return false;
 };
