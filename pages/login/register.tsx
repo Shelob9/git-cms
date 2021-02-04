@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRef } from "react"
 import useSession from '../../hooks/useSession';
 export default function Register() {
@@ -52,6 +53,7 @@ export default function Register() {
                     </div>
                 </form>
             )}
+            <p><Link href="/login/logout"><a>Logout</a></Link></p>
         </div>
         
     )

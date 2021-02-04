@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { useRef } from "react"
 import useSession from '../../hooks/useSession';
 export default function Login() {
@@ -24,26 +25,35 @@ export default function Login() {
 
     return (
         <div>
-            {isLoggedIn ? <div>Logged In!</div> : (
-                <form onSubmit={onSubmit} action="/api/login" method="POST">
+            {isLoggedIn ? (
+                <div>
+                    <h2>Logged In!</h2>
+                    <p><Link href="/login/logout"><a>Logout</a></Link></p>
+                </div>
+            ) : (
                     <div>
-                        <label htmlFor={"email"}>Email</label>
-                        <input name={"email"} type={"email"} ref={emailRef}
-                    
-                            defaultValue={"test@email.com"}
-                        />
+                        <h2>Login!</h2>
+                        <form onSubmit={onSubmit} action="/api/login" method="POST">
+                            <div>
+                                <label htmlFor={"email"}>Email</label>
+                                <input name={"email"} type={"email"} ref={emailRef}
+                            
+                                    defaultValue={"test@email.com"}
+                                />
+                            </div>
+                            <div>
+                                <label htmlFor={"password"}>Password</label>
+                                <input name={"password"} type={"password"} ref={passwordRef}
+                                    defaultValue={"password"}
+                                />
+                            </div>
+                            <div>
+                                <button type={"submit"} onClick={onSubmit}>Login</button>
+                            </div>
+                        </form>
                     </div>
-                    <div>
-                        <label htmlFor={"password"}>Password</label>
-                        <input name={"password"} type={"password"} ref={passwordRef}
-                            defaultValue={"password"}
-                        />
-                    </div>
-                    <div>
-                        <button type={"submit"} onClick={onSubmit}>Login</button>
-                    </div>
-                </form>
             )}
+            <p><Link href="/login/register"><a>Register</a></Link></p>
         </div>
     )
 }

@@ -1,9 +1,1 @@
-{
-	"test@email.com": {
-		"hashedPassword": "$2b$10$IxqvqAx0PvR5WQXapOTLPO7UMWZ4wYkVZRfoEDu61ptUMLz3SGH/2",
-		"data": {
-			"iv": "cb34303a6a5254b744a00fd63dd919e1",
-			"content": "c51dea8285ebb5a24b71440402461600e687800472a7d2ff1b4a5a032fc7b2cc9555302972ffc30a004aedb6e283eeddabf4de4428295e8cae1322c3b69029d6e305b70023f367d22978d1a6fb51c02c17bc945d1a7e43"
-		}
-	}
-}
+{"test@email.com":{"hashedPassword":"$2b$10$IxqvqAx0PvR5WQXapOTLPO7UMWZ4wYkVZRfoEDu61ptUMLz3SGH/2","data":{"iv":"d7cf15caae2563626952738748d7d0eb","content":"c7c3d0756478be2cbad951b507bc47a9aa1d0ffb8949310538356316c8dd490a83b36ad8207f58e455a5270baa63622411f25f0ed10771b30c316e6989e0fb33c0db4144a66e1106a510e367a58b64c9026f71bb388a00"}},"animals@sm.com":{"hashedPassword":"$2b$10$3UAHhQwBqQvSaLPiVJ6r1OIY32OnP0CA/d52fEEQRff/5oFcHSgdq","data":{"iv":"d7cf15caae2563626952738748d7d0eb","content":"c7c3d0756478be2cbad951b507bc47a9aa1d71aa8d181a18020d6c12bbda171a9ba25ed03c7a459f4fdc250ba52b791f16e96537882132a27f255b4389e0fb33c0db4144a66e1113ae0afa46ac9545d3036f71bb388a519b157909df716fb61d56"}}}

@@ -11,7 +11,7 @@ export default async function applicationFactory(
 	//let useGit = process.env.GITCMS_USE_GIT ?? false;
 	let app = await applicationService(
 		dataDirectory ?? "data",
-		[],
+		["roy"],
 		config.useGit
 	);
 	await app.userService.fetchUsers();
