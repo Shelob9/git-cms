@@ -15,12 +15,15 @@
   - `yarn test`
   - `yarn test --watch`
   - `yarn test --ci`
+- Build lib for distribution
+  - `yarn build:lib`
 
 ### Environment Variables
 
 - `GITCMS_USE_GIT`
   - Use git: `GITCMS_USE_GIT=true`
   - Use local file system: `GITCMS_USE_GIT=true`
+
 
 ## Deploy your own
 
