@@ -1,4 +1,11 @@
+/**
+ * CMS
+ */
 import applicationService from "./lib/services/applicationService";
 import GitApi from "./lib/git/GitApi";
-
-export { applicationService, GitApi };
+/**
+ * UI
+ */
+import useSession from "./hooks/useSession";
+import Header from "./components/Header";
+export { applicationService, GitApi, useSession, Header };

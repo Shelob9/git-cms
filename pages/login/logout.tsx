@@ -1,5 +1,5 @@
 import { useRef } from "react"
-import useSession from '../../hooks/useSession';
+import useSession from '../../src/hooks/useSession';
 export default function Logout() {
    
     let { endSession,isLoggedIn } = useSession();

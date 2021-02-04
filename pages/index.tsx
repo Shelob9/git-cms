@@ -1,4 +1,4 @@
-import useSession from "../hooks/useSession"
+import useSession from "../src/hooks/useSession"
 import Link from 'next/link'
 export default function Home() {
   const { isLoggedIn } = useSession();

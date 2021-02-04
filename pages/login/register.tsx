@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useRef } from "react"
-import useSession from '../../hooks/useSession';
+import useSession from '../../src/hooks/useSession';
 export default function Register() {
     let emailRef = useRef<HTMLInputElement>();
     let passwordRef = useRef<HTMLInputElement>();
