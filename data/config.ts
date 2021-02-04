@@ -1,4 +1,4 @@
-import { gitCmsConfig } from "../lib/applicationFactory";
+import { gitCmsConfig } from "../src/lib/applicationFactory";
 
 let config: gitCmsConfig = {
 	useGit: false

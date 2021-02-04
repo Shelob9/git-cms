@@ -1,6 +1,6 @@
-import { hashPassword } from "./../password";
+import { hashPassword } from "../password";
 import { AbstractFileService } from "./types";
-import { encrypt, decrypt, encryptedMessage } from "./../encryptDecrypt";
+import { encrypt, decrypt, encryptedMessage } from "../encryptDecrypt";
 import cryptoRandomString from "crypto-random-string";
 export type userMetas = { [key: string]: string | number };
 export interface UserData {

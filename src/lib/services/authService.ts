@@ -1,4 +1,4 @@
-import { createJwtToken, decodeJwtToken } from "./../jwt";
+import { createJwtToken, decodeJwtToken } from "../jwt";
 import { IUserService, User } from "./userService";
 import { v4 as uuid } from "uuid";
 import crypto from "crypto";
@@ -6,7 +6,10 @@ import crypto from "crypto";
  * Create sha256 hash of string
  */
 export const hashString = (str: string) =>
-	crypto.createHash("sha256").update(str).digest("hex");
+	crypto
+		.createHash("sha256")
+		.update(str)
+		.digest("hex");
 
 export interface IAuthService {
 	validateSessionToken: (sessionId: string, jwt: string) => Promise<boolean>;
@@ -18,7 +21,7 @@ export default async function authService(
 	inviteCodes: string[]
 ): Promise<IAuthService> {
 	async function validateInviteCode(code: string): Promise<boolean> {
-		return new Promise(async (resolve) => {
+		return new Promise(async resolve => {
 			return resolve(inviteCodes.includes(code));
 		});
 	}
@@ -29,7 +32,7 @@ export default async function authService(
 		let sessionId = uuid();
 		let jwt = createJwtToken({
 			email: user.data.email,
-			sessionId: hashString(`${user.data.encryptionKey}-${sessionId}`),
+			sessionId: hashString(`${user.data.encryptionKey}-${sessionId}`)
 		});
 		return { sessionId, jwt };
 	}
@@ -54,6 +57,6 @@ export default async function authService(
 	return {
 		validateSessionToken,
 		startUserSession,
-		validateInviteCode,
+		validateInviteCode
 	};
 }

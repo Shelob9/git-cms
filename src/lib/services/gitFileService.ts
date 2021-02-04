@@ -1,5 +1,5 @@
 import { AbstractFileService, fileIndex } from "./types";
-import { IGitApi } from "./../git/GitApi";
+import { IGitApi } from "../git/GitApi";
 
 export default async function gitFileService(
 	client: IGitApi,
@@ -12,12 +12,12 @@ export default async function gitFileService(
 			return index;
 		},
 		fetchIndex: async () => {
-			return client.getFiles(directory, extension).then((r) => {
-				index = r.map((file) => {
+			return client.getFiles(directory, extension).then(r => {
+				index = r.map(file => {
 					let { path, name } = file;
 					return {
 						path,
-						name,
+						name
 					};
 				});
 				return index;
@@ -39,6 +39,6 @@ export default async function gitFileService(
 				`${directory}/${name}.${extension}`,
 				`Update ${name}`
 			);
-		},
+		}
 	};
 }

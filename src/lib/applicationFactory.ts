@@ -1,6 +1,6 @@
 import { gitRepoDetails } from "./git/GitApi";
 import applicationService from "./services/applicationService";
-import config from "../data/config";
+import config from "../../data/config";
 
 export type gitCmsConfig = {
 	useGit: false | gitRepoDetails;

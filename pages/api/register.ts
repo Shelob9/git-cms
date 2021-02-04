@@ -1,5 +1,5 @@
 import { NextApiResponse, NextApiRequest } from "next";
-import applicationFactory from "../../lib/applicationFactory";
+import applicationFactory from "../../src/lib/applicationFactory";
 import { registerationController } from "../../src/controllers/userApi";
 
 /**

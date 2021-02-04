@@ -1,5 +1,5 @@
-import { gitRepoDetails } from "./../git/GitApi";
-import { checkPassword } from "./../password";
+import { gitRepoDetails } from "../git/GitApi";
+import { checkPassword } from "../password";
 import localFileService from "./localFileService";
 import userService, {
 	User,

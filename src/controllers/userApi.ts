@@ -1,4 +1,4 @@
-import { IApplicationService } from "./../../lib/services/applicationService";
+import { IApplicationService } from "../lib/services/applicationService";
 import { NextApiRequest, NextApiResponse } from "next";
 export async function loginController(
 	app: IApplicationService,

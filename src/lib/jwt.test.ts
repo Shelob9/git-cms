@@ -1,4 +1,4 @@
-import { decodeJwtToken, createJwtToken } from "../lib/jwt";
+import { decodeJwtToken, createJwtToken } from "./jwt";
 
 describe("jwt", () => {
 	let data = { hi: "Roy" };
