@@ -1,0 +1,13 @@
+pages
+.github
+.next
+data
+node_modules
+public
+test-files
+jest.setup.test
+next.env.d.test
+tailwind.config.js
+tsconfig.jest.json
+tsconfig.build.json
+tsconfig.json

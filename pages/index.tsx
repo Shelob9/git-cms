@@ -1,6 +1,5 @@
 import useSession from "../hooks/useSession"
 import Link from 'next/link'
-
 export default function Home() {
   const { isLoggedIn } = useSession();
   return (
@@ -8,8 +7,8 @@ export default function Home() {
       <>
         <h1>
           Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
+          <a className="text-blue-600">
+            GitCms
           </a>
         </h1>
         <div>
@@ -19,8 +18,6 @@ export default function Home() {
           </Link>}
           </p>
         </div>
-       
-        
       </>
     </>
   )
