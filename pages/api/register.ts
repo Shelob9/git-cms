@@ -1,11 +1,11 @@
 import { NextApiResponse, NextApiRequest } from "next";
-import factory from "../../lib/factory";
+import applicationFactory from "../../lib/applicationFactory";
 
 async function registerationController(
 	req: NextApiRequest,
 	res: NextApiResponse
 ) {
-	let app = await factory(undefined);
+	let app = await applicationFactory(undefined);
 	switch (req.method) {
 		case "POST": {
 			let { email, password, inviteCode } = req.body;

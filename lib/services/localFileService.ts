@@ -11,14 +11,14 @@ export default async function localFileService(
 	async function _fetchIndex() {
 		return new Promise(async (resolve, reject) => {
 			// options is optional
-			glob(globPattern, {}, function (err, files) {
+			glob(globPattern, {}, function(err, files) {
 				if (err) {
 					reject(err);
 				}
-				files.forEach((path) => {
+				files.forEach(path => {
 					index.push({
 						path,
-						name: path.replace(`${directory}/`, ""),
+						name: path.replace(`${directory}/`, "")
 					});
 				});
 				resolve(index);
@@ -36,10 +36,10 @@ export default async function localFileService(
 		},
 		fetchFile: async (name: string) => {
 			let filePath = `${process.cwd()}/${directory}/${name}.${extension}`;
-			return new Promise(async (resolve, reject) => {
+			return new Promise(async resolve => {
 				const content = fs.readFileSync(filePath, {
 					encoding: "utf8",
-					flag: "r",
+					flag: "r"
 				});
 
 				resolve({ content });
@@ -47,13 +47,13 @@ export default async function localFileService(
 		},
 		saveFile: async (name: string, content: string) => {
 			let filePath = `${process.cwd()}/${directory}/${name}.${extension}`;
-			return new Promise(async (resolve, reject) => {
+			return new Promise(async resolve => {
 				fs.writeFileSync(filePath, content, {
-					encoding: "utf8",
+					encoding: "utf8"
 				});
 
 				resolve({ content });
 			});
-		},
+		}
 	};
 }

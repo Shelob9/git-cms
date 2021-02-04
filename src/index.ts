@@ -1,3 +1,4 @@
-export const plusTwo = (a: number) => {
-	return a + 2;
-};
+import applicationService from "../lib/services/applicationService";
+import GitApi from "../lib/git/GitApi";
+
+export { applicationService, GitApi };

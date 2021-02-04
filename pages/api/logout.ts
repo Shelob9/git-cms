@@ -1,8 +1,8 @@
 import { NextApiResponse, NextApiRequest } from "next";
-import factory from "../../lib/factory";
+import applicationFactory from "../../lib/applicationFactory";
 
 async function logoutController(req: NextApiRequest, res: NextApiResponse) {
-	let app = await factory(undefined);
+	let app = await applicationFactory(undefined);
 	switch (req.method) {
 		default:
 			await app.logoutCurrentUser();

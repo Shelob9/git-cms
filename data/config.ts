@@ -1,6 +1,6 @@
-import { gitCmsConfig } from "../lib/factory";
+import { gitCmsConfig } from "../lib/applicationFactory";
 
 let config: gitCmsConfig = {
-	useGit: false,
+	useGit: false
 };
 export default config;

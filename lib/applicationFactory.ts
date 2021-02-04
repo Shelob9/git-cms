@@ -5,7 +5,9 @@ import config from "../data/config";
 export type gitCmsConfig = {
 	useGit: false | gitRepoDetails;
 };
-export default async function factory(dataDirectory: string | undefined) {
+export default async function applicationFactory(
+	dataDirectory: string | undefined
+) {
 	//let useGit = process.env.GITCMS_USE_GIT ?? false;
 	let app = await applicationService(
 		dataDirectory ?? "data",

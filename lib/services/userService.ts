@@ -58,8 +58,8 @@ export const userMetaService = async (
 					email: user.data.email,
 					meta: {
 						...user.data.meta,
-						[key]: value,
-					},
+						[key]: value
+					}
 				});
 				user = users[user.data.email];
 				resolve(value);
@@ -70,7 +70,7 @@ export const userMetaService = async (
 	}
 
 	async function getMeta(key: string): Promise<string | number | false> {
-		return new Promise(async (resolve, reject) => {
+		return new Promise(async resolve => {
 			let value = user.data.meta.hasOwnProperty(key)
 				? user.data.meta[key]
 				: false;
@@ -81,7 +81,7 @@ export const userMetaService = async (
 
 	return {
 		saveMeta,
-		getMeta,
+		getMeta
 	};
 };
 export interface IUserService {
@@ -106,14 +106,14 @@ export default async function userService(
 	 */
 	async function setMap(jsonString: string) {
 		let _users = JSON.parse(jsonString);
-		Object.keys(_users).forEach(async (k) => {
+		Object.keys(_users).forEach(async k => {
 			let data = await decrypt(_users[k].data);
 			//@ts-ignore
 			data = JSON.parse(data);
 			users[k] = {
 				hashedPassword: _users[k].hashedPassword,
 				//@ts-ignore
-				data,
+				data
 			};
 		});
 	}
@@ -124,13 +124,13 @@ export default async function userService(
 	 * Returns unencrypted user map
 	 */
 	async function saveUsers(): Promise<UserMap> {
-		return new Promise(async (resolve) => {
+		return new Promise(async resolve => {
 			let _users = {};
-			Object.keys(users).forEach((email) => {
+			Object.keys(users).forEach(email => {
 				let data = encrypt(JSON.stringify(users[email].data));
 				_users[email] = {
 					hashedPassword: users[email].hashedPassword,
-					data,
+					data
 				};
 			});
 			await fileService.saveFile("users", JSON.stringify(_users));
@@ -142,7 +142,7 @@ export default async function userService(
 	 * Load all users
 	 */
 	async function fetchUsers(): Promise<UserMap> {
-		return new Promise(async (resolve, reject) => {
+		return new Promise(async resolve => {
 			let { content } = await fileService.fetchFile("users");
 			setMap(content);
 			resolve(users);
@@ -164,12 +164,12 @@ export default async function userService(
 		updateUser: async (input: UserUpdateInput): Promise<UserMap> => {
 			let data: UserData = {
 				...users[input.email].data,
-				meta: input.meta ? input.meta : users[input.email].data.meta,
+				meta: input.meta ? input.meta : users[input.email].data.meta
 			};
 			users[input.email] = {
 				...input,
 				hashedPassword: users[input.email].hashedPassword,
-				data,
+				data
 			};
 			return await saveUsers();
 		},
@@ -183,17 +183,17 @@ export default async function userService(
 			let hashedPassword = await hashPassword(plainTextPassword);
 			let encryptionKey = cryptoRandomString({
 				length: 42,
-				type: "alphanumeric",
+				type: "alphanumeric"
 			});
 
 			let user: User = {
 				hashedPassword,
-				data: { encryptionKey, email, meta: {} },
+				data: { encryptionKey, email, meta: {} }
 			};
 			users[email] = user;
 
 			await saveUsers();
 			return user;
-		},
+		}
 	};
 }

@@ -9,7 +9,7 @@ import {
 	createNewCommit,
 	createNewTree,
 	getCurrentCommit,
-	setBranchToCommit,
+	setBranchToCommit
 } from "./gitUtil";
 
 export const getRepos = async () => {
@@ -42,13 +42,13 @@ function GitApi(
 		const currentCommit = await getCurrentCommit({
 			octo,
 			...gitRepo,
-			branch,
+			branch
 		});
 
 		let blob = await createBlobForFile({
 			octo,
 			...gitRepo,
-			content,
+			content
 		});
 
 		let newTree = await createNewTree({
@@ -56,20 +56,20 @@ function GitApi(
 			...gitRepo,
 			blobs: [blob],
 			paths: [fullFilePath],
-			parentTreeSha: currentCommit.treeSha,
+			parentTreeSha: currentCommit.treeSha
 		});
 		const newCommit = await createNewCommit({
 			octo,
 			...gitRepo,
 			commitMessage,
 			currentTreeSha: newTree.sha,
-			currentCommitSha: currentCommit.commitSha,
+			currentCommitSha: currentCommit.commitSha
 		});
-		let commit = await setBranchToCommit({
+		await setBranchToCommit({
 			octo,
 			...gitRepo,
 			branch,
-			commitSha: newCommit.sha,
+			commitSha: newCommit.sha
 		});
 		return { commitSha: newCommit.sha };
 	};
@@ -78,14 +78,14 @@ function GitApi(
 		return await octo.repos
 			.getContent({
 				...gitRepo,
-				path: filePath,
+				path: filePath
 			})
-			.catch((e) => {
+			.catch(e => {
 				return e;
 			})
-			.then((result) => {
+			.then(result => {
 				if (!result) {
-					return;
+					return null;
 				}
 				// content will be base64 encoded
 				const content = Buffer.from(result.data.content, "base64").toString();
@@ -100,9 +100,9 @@ function GitApi(
 		let r = await octo.repos
 			.getContent({
 				...gitRepo,
-				path,
+				path
 			})
-			.catch((e) => {
+			.catch(e => {
 				console.log(e);
 				throw e;
 			})
@@ -120,7 +120,7 @@ function GitApi(
 	return {
 		saveFile,
 		getFile,
-		getFiles,
+		getFiles
 	};
 }
 
