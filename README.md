@@ -1,6 +1,6 @@
 # GitCMS
 
-Git-baked CMS with React components.
+Git-based CMS with optional React components and Next.js-integrations that dreams of being a distributed knowledge graph.
 
 An experiment by [Josh Pollock](https://joshpress.net).
 
