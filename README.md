@@ -20,15 +20,56 @@ GitCMS uses a service-based architecture. It is being developed to work with Rea
 
 ### Create Application Container
 
+The application container is a service that provides all of the services that make up GitCMS.
+
+#### Application Factory
+
+To simplify creating the application service, there is an application factory, that accepts two arguments:
+
 ```js
 import {applicationFactory} from "@shelob9/gitcms"
-
 const app = await applicationFactory(
-  '/data',//path to data storage dir in git repo
-  [], //array of valid invite codes for user registration
-  true// Use git (true) or node filesystem (false) to write files.
+  undefined,//storage path, defaults to '/data'
+  {
+    config: {
+      useGit: {owner: "repo-org",repo: "repo-name"}
+    },
+    gitAuth
+  }
+)
+
+```
+
+- Storage path: `string|undefined`
+  - Path for data storage dir in git repo
+  - If undefined `/data` is used.
+- Config: `GitCmsConfig|undefined`
+
+#### Creating Application Service Manually
+
+```js
+import {applicationService} from "@shelob9/gitcms"
+
+const app = await applicationService(
+  '/my-data-path',//Storage path
+  [], //Invite codes
+  false// Use Git
+  gitAuth//Gitub authentication
 )
 ```
+
+- Storage path: `string|undefined`
+  - Path for data storage dir in git repo
+  - If undefined `/data` is used.
+- Invite codes: `string[]`
+  - Array of valid invite codes for user registration.
+- Use git : `bool|gitRepoDetials`
+  - Use git (repo options) or node filesystem (false) to write files.
+  - `{owner: "repo-org",repo: "repo-name"}`
+- gitAuth: `string|any`
+  - [Github Personal Access Token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/)
+  - [Github app or oauth authentication](https://github.com/octokit/auth-app.js)
+
 
 ## Users
 

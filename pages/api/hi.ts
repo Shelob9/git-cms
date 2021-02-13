@@ -2,7 +2,7 @@ import { NextApiResponse, NextApiRequest } from "next";
 import applicationFactory from "../../src/lib/applicationFactory";
 //Says Hi to Roy
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	let app = await applicationFactory(undefined);
+	let app = await applicationFactory(undefined, undefined);
 
 	switch (req.method) {
 		case "GET": {

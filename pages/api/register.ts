@@ -6,6 +6,6 @@ import { registerationController } from "../../src/controllers/userApi";
  * Register user via API
  */
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	let app = await applicationFactory(undefined);
+	let app = await applicationFactory(undefined, undefined);
 	await registerationController(app, req, res);
 };
