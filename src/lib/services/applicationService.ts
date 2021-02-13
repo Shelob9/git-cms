@@ -39,7 +39,16 @@ export default async function applicationService(
 	let userFileService =
 		false === useGit
 			? await localFileService(appDirectory, "json")
-			: await gitFileService(GitApi(useGit, "main"), appDirectory, "json");
+			: await gitFileService(
+					GitApi(
+						useGit,
+						"main"
+						//THIS IS A PROBLEM...
+						//authToken
+					),
+					appDirectory,
+					"json"
+			  );
 	let _userService = await userService(userFileService);
 	let _authService = await authService(_userService, inviteCodes);
 	let currentUser: User | undefined = undefined;
