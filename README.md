@@ -11,7 +11,7 @@ An experiment by [Josh Pollock](https://joshpress.net).
 ## Installation
 
 ```sh
-yarn add git@github.com:Shelob9/gitcms.git
+yarn add ssh://github.com/Shelob9/gitcms
 ```
 
 ## Using Application Container
