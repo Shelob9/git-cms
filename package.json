@@ -1,5 +1,5 @@
 {
-	"name": "gitcms",
+	"name": "@shelob9/gitcms",
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
