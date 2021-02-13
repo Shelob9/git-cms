@@ -10,7 +10,6 @@ import userService, {
 import authService, { IAuthService } from "./authService";
 import gitFileService from "./gitFileService";
 import GitApi from "../git/GitApi";
-
 export interface IApplicationService {
 	loginUser: (
 		email: string,
@@ -29,10 +28,12 @@ export interface IApplicationService {
 	useGit: boolean | gitRepoDetails;
 	setCurrentUser: (user: User | undefined) => Promise<void>;
 }
+
 export default async function applicationService(
 	appDirectory: string,
 	inviteCodes?: string[],
-	useGit?: false | gitRepoDetails
+	useGit?: false | gitRepoDetails,
+	gitAuth?: string | any
 ): Promise<IApplicationService> {
 	inviteCodes = inviteCodes ?? ["roy"];
 	useGit = useGit ?? false;
@@ -40,12 +41,7 @@ export default async function applicationService(
 		false === useGit
 			? await localFileService(appDirectory, "json")
 			: await gitFileService(
-					GitApi(
-						useGit,
-						"main"
-						//THIS IS A PROBLEM...
-						//authToken
-					),
+					GitApi(useGit, "main", gitAuth),
 					appDirectory,
 					"json"
 			  );

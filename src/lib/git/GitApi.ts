@@ -31,7 +31,7 @@ export interface IGitApi {
 function GitApi(
 	gitRepo: gitRepoDetails,
 	branch: string,
-	authToken?: string
+	authToken?: string | any //should be typed for git app auth
 ): IGitApi {
 	let octo = getOctokit(authToken);
 	const saveFile = async (

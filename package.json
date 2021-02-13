@@ -17,7 +17,9 @@
 		"src"
 	],
 	"dependencies": {
+		"@octokit/auth-app": "^2.11.0",
 		"@octokit/rest": "^18.0.15",
+		"@octokit/types": "^6.8.4",
 		"@tailwindcss/forms": "^0.2.1",
 		"@tailwindcss/typography": "^0.4.0",
 		"@testing-library/react": "^11.2.3",
