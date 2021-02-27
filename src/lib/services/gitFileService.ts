@@ -10,15 +10,17 @@ export default async function gitFileService(
 	extension: "md" | "json"
 ): Promise<IGitFileService> {
 	let index: fileIndex = [];
-	return {
-		getClient() {
-			return client;
-		},
+	function getClient() {
+		return client;
+	}
+	let self = {
+		getClient,
 		getIndex: () => {
 			return index;
 		},
 		fetchIndex: async () => {
-			return this.getClient()
+			return self
+				.getClient()
 				.getFiles(directory, extension)
 				.then(r => {
 					index = r.map(file => {
@@ -32,7 +34,8 @@ export default async function gitFileService(
 				});
 		},
 		fetchFile: async (name: string) => {
-			return this.client
+			return self
+				.getClient()
 				.getFile(`${directory}/${name}.${extension}`)
 				.then(({ content }) => {
 					return { content };
@@ -42,11 +45,15 @@ export default async function gitFileService(
 			name: string,
 			contents: string
 		): Promise<{ content: string }> => {
-			return await this.client.saveFile(
-				contents,
-				`${directory}/${name}.${extension}`,
-				`Update ${name}`
-			);
+			await self
+				.getClient()
+				.saveFile(
+					contents,
+					`${directory}/${name}.${extension}`,
+					`Update ${name}`
+				);
+			return { content: contents };
 		}
 	};
+	return self;
 }
