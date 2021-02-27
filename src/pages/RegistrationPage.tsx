@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useRef } from "react"
+import React,{ useRef } from "react"
 import useSession from "../hooks/useSession";
 
 export default function RegistrationPage() {

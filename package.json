@@ -13,7 +13,7 @@
 		"test": "jest",
 		"build:lib": "tsdx build  --tsconfig=tsconfig.build.json",
 		"lint": "tsdx lint",
-		"release": "yarn build && yarn publish"
+		"release": "yarn build:lib && yarn publish"
 	},
 	"main": "dist/index.js",
 	"typings": "dist/index.d.ts",

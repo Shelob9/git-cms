@@ -1,3 +1,4 @@
+import { User } from "./../lib/services/userService";
 import { IApplicationService } from "../lib/services/applicationService";
 import { NextApiRequest, NextApiResponse } from "next";
 export async function loginController(
@@ -51,7 +52,7 @@ export async function registerationController(
 			try {
 				let user = await app.registerUser(email, password, inviteCode);
 				if (user) {
-					let session = await app.authService.startUserSession(user);
+					let session = await app.authService.startUserSession(user as User);
 					res.status(201).json({ session });
 				} else {
 					res

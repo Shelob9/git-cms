@@ -1,5 +1,5 @@
 import useSession from "../hooks/useSession";
-
+import React from 'react';
 export default function LogoutPage() {
     let { endSession,isLoggedIn } = useSession();
     return (

@@ -1,10 +1,10 @@
 import { decodeJwtToken } from "./jwt";
 import { NextApiRequest } from "next";
 import Cookies from "universal-cookie";
-
+import { encryptedMessage } from "./encryptDecrypt";
 export interface userJwtData {
 	name: string;
-	session: hash;
+	session: encryptedMessage;
 }
 
 const getSession = (
