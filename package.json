@@ -1,6 +1,6 @@
 {
-	"name": "y",
-	"version": "0.2.1",
+	"name": "@digital-garden-builder/git-cms",
+	"version": "0.3.0",
 	"private": false,
 	"repository": {
 		"type": "git",
