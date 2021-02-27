@@ -1,3 +1,5 @@
+import { encrypt, decrypt } from "./lib/encryptDecrypt";
+import { createJwtToken, decodeJwtToken } from "./lib/jwt";
 /**
  * CMS
  */
@@ -17,5 +19,9 @@ export {
 	useSession,
 	RegistrationPage,
 	LogoutPage,
-	LoginPage
+	LoginPage,
+	createJwtToken,
+	decodeJwtToken,
+	encrypt,
+	decrypt
 };
