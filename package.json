@@ -1,7 +1,11 @@
 {
-	"name": "@shelob9/gitcms",
+	"name": "git-cms",
 	"version": "0.1.0",
-	"private": true,
+	"private": false,
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Shelob9/git-cms"
+	},
 	"scripts": {
 		"dev": "next dev",
 		"build": "next build",
