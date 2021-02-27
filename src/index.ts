@@ -1,3 +1,5 @@
+import { hashString } from "./lib/services/authService";
+import { hashPassword, checkPassword } from "./lib/password";
 import { encrypt, decrypt } from "./lib/encryptDecrypt";
 import { createJwtToken, decodeJwtToken } from "./lib/jwt";
 /**
@@ -23,5 +25,8 @@ export {
 	createJwtToken,
 	decodeJwtToken,
 	encrypt,
-	decrypt
+	decrypt,
+	hashPassword,
+	hashString,
+	checkPassword
 };
