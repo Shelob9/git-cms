@@ -11,3 +11,4 @@ tailwind.config.js
 tsconfig.jest.json
 tsconfig.build.json
 tsconfig.json
+.env.local
