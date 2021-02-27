@@ -216,6 +216,12 @@ Not impimented yet.
 - Lint
   - `yarn lint`
 
+### Publish
+
+```bash
+yarn release
+```
+
 ### Environment Variables
 
 - `GITCMS_USE_GIT`
