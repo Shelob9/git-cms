@@ -11,7 +11,7 @@ An experiment by [Josh Pollock](https://joshpress.net).
 ## Installation
 
 ```sh
-yarn add https://github.com/Shelob9/gitcms
+yarn add @digital-garden-builder/git-cms
 ```
 
 ## Using Application Container
