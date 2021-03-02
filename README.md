@@ -4,9 +4,9 @@ Git-based CMS with optional React components and Next.js-integrations that dream
 
 - [About Git-CMS](https://code.joshpress.net/notes/gitcms)
 - The reference implimentation is [Digital Garden Builder](https://docs.digitalgardenbuilder.app/).
-An experiment by [Josh Pollock](https://joshpress.net).
 
 ![Tests](https://github.com/Shelob9/next-starter/workflows/Tests/badge.svg)
+
 
 ## Installation
 
@@ -227,4 +227,8 @@ yarn release
 - `GITCMS_USE_GIT`
   - Use git: `GITCMS_USE_GIT=true`
   - Use local file system: `GITCMS_USE_GIT=true`
+
+## Pull Requests Welcome
+
+This is an experiment by [Josh Pollock](https://joshpress.net), [please feel free to play along](https://github.com/Shelob9/git-cms/pulls).
 
