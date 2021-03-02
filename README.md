@@ -2,8 +2,8 @@
 
 Git-based CMS with optional React components and Next.js-integrations that dreams of being a distributed knowledge graph.
 
->[Learn More](https://code.joshpress.net/notes/gitcms)
-
+- [About Git-CMS](https://code.joshpress.net/notes/gitcms)
+- The reference implimentation is [Digital Garden Builder](https://docs.digitalgardenbuilder.app/).
 An experiment by [Josh Pollock](https://joshpress.net).
 
 ![Tests](https://github.com/Shelob9/next-starter/workflows/Tests/badge.svg)
